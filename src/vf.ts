@@ -1,11 +1,13 @@
 ﻿import {
-    HeaderComponent,
-    HomePageComponent,
+    //HeaderComponent,
+    //HomePageComponent,
 
-    Router
+    Router,
+    View
 } from "./app";
 
 
 customElements.register("vf-router", Router);
-customElements.register("vf-header", HeaderComponent);
-customElements.register("vf-home-page", HomePageComponent);
+customElements.register("vf-view", View);
+//customElements.register("vf-header", HeaderComponent);
+//customElements.register("vf-home-page", HomePageComponent);
