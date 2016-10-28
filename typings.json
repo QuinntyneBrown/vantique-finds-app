@@ -1,6 +1,5 @@
 {
   "globalDependencies": {
-    "core-js": "registry:dt/core-js#0.0.0+20160914114559",
     "handlebars": "registry:dt/handlebars#4.0.5+20160804082238",
     "moment": "registry:dt/moment#2.11.1+20161010105546",
     "reflect-metadata": "registry:dt/reflect-metadata#0.0.0+20160630155503",

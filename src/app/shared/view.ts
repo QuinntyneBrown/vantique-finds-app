@@ -1,4 +1,9 @@
 ﻿export class View extends HTMLElement {
+
+    constructor() {
+        super();
+    }
+
     get route() {
         return this.getAttribute('route') || null;
     }

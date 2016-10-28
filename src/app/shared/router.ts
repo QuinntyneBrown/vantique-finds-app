@@ -1,5 +1,9 @@
 ﻿export class Router extends HTMLElement {
 
+    constructor() {
+        super();
+    }
+
     _onChanged() {
         const path = window.location.pathname;
         const routes = Array.from(this._routes.keys());
