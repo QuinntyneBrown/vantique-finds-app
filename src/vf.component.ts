@@ -1,5 +1,10 @@
 import "core-js/es6";
 import "./app";
+import { 
+    RouterComponent,
+    HomePageComponent
+
+} from "./app";
 
 let customElements:any;
 import { loadStyles } from "./app/utils";
@@ -8,12 +13,6 @@ let styles = require("./vf.component.scss");
 
 const prefix: string = "ce";
 const selector: string = "vf";
-let customInnerHTML = ["<style>", styles, "</style>", template].join(" ");
-
-if(!document.head["createShadowRoot"]) {
-    styles = styles.replace(new RegExp(":host", 'g'), `${prefix}-${selector}`)
-    loadStyles(styles);
-}
 
 export class VFComponent extends HTMLElement {
     constructor() {
@@ -24,14 +23,16 @@ export class VFComponent extends HTMLElement {
         return [];
     }
 
-    connectedCallback() {
+    _root:any;
 
-        if(document.head["createShadowRoot"]) {
-            let shadowRoot = (this as any).attachShadow({mode: 'open'});
-            shadowRoot.innerHTML = customInnerHTML;            
-        } else {
-            this.innerHTML = template;
-        }  
+    connectedCallback() {
+        this._root  = (this as any).attachShadow({mode: 'open'});
+        this._root.innerHTML = ["<style>", styles, "</style>", template].join(" ");
+        var el = document.createElement("div");
+        el.innerHTML = this._root.innerHTML;        
+        var router = new RouterComponent(el,[{ "path":"/","component":HomePageComponent }]);        
+        el.querySelector("ce-router").appendChild(router.connectedCallback().firstChild as HTMLElement);
+        this._root.innerHTML = el.innerHTML;
     }
 
     disconnectedCallback() {

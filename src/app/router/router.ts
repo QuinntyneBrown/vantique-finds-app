@@ -4,62 +4,35 @@ let template = require("./router.html");
 const prefix: string = "ce";
 const selector: string = "router";
 
-export class RouterComponent extends HTMLElement {
-    constructor() {
-        super();
+export class RouterComponent {
+    constructor(element:HTMLElement, private _routes:Array<{ path:string, component:any }>) {
+
+        this._element = element;
+
+
     }
 
-    static get observedAttributes () {
-        return [
-            "routes"
-        ];
-    }
+    private _element:HTMLElement;
 
-    connectedCallback() {
-		if(document.head["createShadowRoot"]) {
-            this._root = (this as any).attachShadow({mode: 'open'});
-            this._root.innerHTML = template;            
-        } else {
-            this.innerHTML = template;
-        }  
-
+    public connectedCallback() {
         window.addEventListener('popstate', this._onChanged);
         //this._clearRoutes();
         //this._addRoutes();
         this._onChanged();
+        return this._element;
     }
 
     private _onChanged() {
         const path = window.location.pathname;        
-    }
-
-    disconnectedCallback() {
-
-    }
-
-    attributeChangedCallback (name, oldValue, newValue) {
-
-        switch (name) {
-            case "routes":
-                this.routes = JSON.parse(newValue);
-            break;
+        for(var i =0; i < this._routes.length; i++) {
+            if(this._routes[i].path == "/") {
+                var divEl = document.createElement("div");
+                divEl.innerHTML = "<ce-home-page></ce-home-page>";                  
+                this._element.appendChild(divEl);
+            }
         }
-        
-        
-    }
-
-    private _routes;
-    public set routes(value) {
-        this._routes = value;
-    }
-    
-    public get routes() {
-        return this._routes;
     }
     
 	private _root;
 }
 
-document.addEventListener("DOMContentLoaded",function() {
-    (window as any).customElements.define(`${prefix}-${selector}`,RouterComponent);
-});
