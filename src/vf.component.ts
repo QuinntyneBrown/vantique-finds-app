@@ -1,17 +1,19 @@
+import "./app/home";
+
 let customElements:any;
 const prefix: string = "ce";
-const selector: string = "home-page";
+const selector: string = "vf";
 let customInnerHTML = [
     "<style>", 
-    require("./home-page.component.scss"), 
+    require("./vf.component.scss"), 
     "</style>", 
-    require("./home-page.component.html")
+    require("./vf.component.html")
     ].join(" ");
 
 if(!document.head["createShadowRoot"])
     customInnerHTML = customInnerHTML.replace(":host", `${prefix}-${selector}`);
 
-export class HomePageComponent extends HTMLElement {
+export class VfComponent extends HTMLElement {
     constructor() {
         super();
     }
@@ -40,6 +42,5 @@ export class HomePageComponent extends HTMLElement {
 }
 
 document.addEventListener("DOMContentLoaded",function() {
-    alert("?");
-    (window as any).customElements.define(`${prefix}-${selector}`,HomePageComponent);
+    (window as any).customElements.define(`${prefix}-${selector}`,VfComponent);
 });

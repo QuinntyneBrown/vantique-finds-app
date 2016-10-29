@@ -5,7 +5,7 @@ var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 module.exports = {
     devtool: 'source-map',
     entry: {
-        'vf': './src/vf'
+        'vf': './src/vf.component'
     },
     output: {
         path: __dirname + "/dist",
