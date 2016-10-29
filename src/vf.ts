@@ -1,21 +1,16 @@
 ﻿import 'core-js/es6';
-
-import { HeaderComponent } from "./app/shared/header.component";
-import {
-    HomePageComponent,
-
-    Router,
-    View
-} from "./app";
-
-
+import 'reflect-metadata';
+import { bootstrap } from "./bootstrap";
+import * as app from "./app";
 import { loadStyles } from "./app/utils/load-css";
+import { Component } from "./app/decorators";
 
 const template = require("./vf.html");
-
-
 loadStyles(require("./vf.scss"));
 
+@Component({
+    selector:"ce-app"
+})
 class VF extends HTMLElement {
     constructor() {
         super();        
@@ -27,11 +22,13 @@ class VF extends HTMLElement {
 
 }
 
-customElements.define("vf-app", VF);
-
-customElements.define("ce-home-page", HomePageComponent);
-
-customElements.define("ce-header", HeaderComponent);
-customElements.define("ce-router", Router);
-customElements.define("ce-view", View);
+bootstrap({
+    declarables: [
+        VF,
+        app.HeaderComponent,
+        app.HomePageComponent,
+        app.Router,
+        app.View
+    ]
+})
 

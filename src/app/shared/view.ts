@@ -1,4 +1,9 @@
-﻿export class View extends HTMLElement {
+﻿import { Component } from "../decorators";
+
+@Component({
+    selector: "ce-view"
+})
+export class View extends HTMLElement {
 
     constructor() {
         super();
