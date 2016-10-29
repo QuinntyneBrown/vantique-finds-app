@@ -1,19 +1,21 @@
+import "core-js/es6";
 import "./app";
 
 let customElements:any;
+import { loadStyles } from "./app/utils";
+let template = require("./vf.component.html");
+let styles = require("./vf.component.scss");
+
 const prefix: string = "ce";
 const selector: string = "vf";
-let customInnerHTML = [
-    "<style>", 
-    require("./vf.component.scss"), 
-    "</style>", 
-    require("./vf.component.html")
-    ].join(" ");
+let customInnerHTML = ["<style>", styles, "</style>", template].join(" ");
 
-if(!document.head["createShadowRoot"])
-    customInnerHTML = customInnerHTML.replace(":host", `${prefix}-${selector}`);
+if(!document.head["createShadowRoot"]) {
+    styles = styles.replace(new RegExp(":host", 'g'), `${prefix}-${selector}`)
+    loadStyles(styles);
+}
 
-export class VfComponent extends HTMLElement {
+export class VFComponent extends HTMLElement {
     constructor() {
         super();
     }
@@ -28,7 +30,7 @@ export class VfComponent extends HTMLElement {
             let shadowRoot = (this as any).attachShadow({mode: 'open'});
             shadowRoot.innerHTML = customInnerHTML;            
         } else {
-            this.innerHTML = customInnerHTML;
+            this.innerHTML = template;
         }  
     }
 
@@ -42,5 +44,5 @@ export class VfComponent extends HTMLElement {
 }
 
 document.addEventListener("DOMContentLoaded",function() {
-    (window as any).customElements.define(`${prefix}-${selector}`,VfComponent);
+    (window as any).customElements.define(`${prefix}-${selector}`,VFComponent);
 });

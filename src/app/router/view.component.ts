@@ -1,17 +1,11 @@
 import { loadStyles } from "../utils";
 let customElements:any;
-let template = require("./home-page.component.html");
-let styles = require("./home-page.component.scss");
+let template = require("./view.component.html");
+
 const prefix: string = "ce";
-const selector: string = "home-page";
-let customInnerHTML = ["<style>",styles, "</style>", template].join(" ");
+const selector: string = "view";
 
-if(!document.head["createShadowRoot"]) {
-    styles = styles.replace(new RegExp(":host", 'g'), `${prefix}-${selector}`)
-    loadStyles(styles);
-}
-
-export class HomePageComponent extends HTMLElement {
+export class ViewComponent extends HTMLElement {
     constructor() {
         super();
     }
@@ -21,10 +15,9 @@ export class HomePageComponent extends HTMLElement {
     }
 
     connectedCallback() {
-
 		if(document.head["createShadowRoot"]) {
             this._root = (this as any).attachShadow({mode: 'open'});
-            this._root.innerHTML = customInnerHTML;            
+            this._root.innerHTML = template;            
         } else {
             this.innerHTML = template;
         }  
@@ -42,5 +35,5 @@ export class HomePageComponent extends HTMLElement {
 }
 
 document.addEventListener("DOMContentLoaded",function() {
-    (window as any).customElements.define(`${prefix}-${selector}`,HomePageComponent);
+    (window as any).customElements.define(`${prefix}-${selector}`,ViewComponent);
 });

@@ -1,6 +1,12 @@
+import { loadStyles } from "../utils";
+let template = require("./header.component.html");
+let styles = require("./header.component.scss");
+
 let customElements:any;
 const prefix: string = "ce";
 const selector: string = "header";
+
+
 let customInnerHTML = [
     "<style>", 
     require("./header.component.scss"), 
@@ -8,8 +14,11 @@ let customInnerHTML = [
     require("./header.component.html")
     ].join(" ");
 
-if(!document.head["createShadowRoot"])
-    customInnerHTML = customInnerHTML.replace(":host", `${prefix}-${selector}`);
+if(!document.head["createShadowRoot"]) {
+    styles = styles.replace(new RegExp(":host", 'g'), `${prefix}-${selector}`)
+    loadStyles(styles);
+}
+    
 
 export class HeaderComponent extends HTMLElement {
     constructor() {
@@ -26,7 +35,7 @@ export class HeaderComponent extends HTMLElement {
             let shadowRoot = (this as any).attachShadow({mode: 'open'});
             shadowRoot.innerHTML = customInnerHTML;            
         } else {
-            this.innerHTML = customInnerHTML;
+            this.innerHTML = template;
         }  
     }
 
