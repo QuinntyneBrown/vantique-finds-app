@@ -40,6 +40,5 @@ export class HomePageComponent extends HTMLElement {
 }
 
 document.addEventListener("DOMContentLoaded",function() {
-    alert("?");
     (window as any).customElements.define(`${prefix}-${selector}`,HomePageComponent);
 });

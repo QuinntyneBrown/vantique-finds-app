@@ -1,4 +1,4 @@
-import "./app/home";
+import "./app";
 
 let customElements:any;
 const prefix: string = "ce";

@@ -1,16 +1,44 @@
-﻿var template = require(".//header.component.html");
-import { Component } from "../decorators";
+let customElements:any;
+const prefix: string = "ce";
+const selector: string = "header";
+let customInnerHTML = [
+    "<style>", 
+    require("./header.component.scss"), 
+    "</style>", 
+    require("./header.component.html")
+    ].join(" ");
 
-@Component({
-    selector:"ce-header"
-})
+if(!document.head["createShadowRoot"])
+    customInnerHTML = customInnerHTML.replace(":host", `${prefix}-${selector}`);
+
 export class HeaderComponent extends HTMLElement {
     constructor() {
-        super();        
+        super();
+    }
+
+    static get observedAttributes () {
+        return [];
     }
 
     connectedCallback() {
-        this.innerHTML = template;
+
+        if(document.head["createShadowRoot"]) {
+            let shadowRoot = (this as any).attachShadow({mode: 'open'});
+            shadowRoot.innerHTML = customInnerHTML;            
+        } else {
+            this.innerHTML = customInnerHTML;
+        }  
+    }
+
+    disconnectedCallback() {
+
+    }
+
+    attributeChangedCallback (name, oldValue, newValue) {
+
     }
 }
 
+document.addEventListener("DOMContentLoaded",function() {
+    (window as any).customElements.define(`${prefix}-${selector}`,HeaderComponent);
+});
