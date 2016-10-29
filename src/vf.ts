@@ -1,11 +1,20 @@
-﻿import { HeaderComponent } from "./app/shared/header.component";
+﻿import 'core-js/es6';
+
+import { HeaderComponent } from "./app/shared/header.component";
 import {
     HomePageComponent,
 
     Router,
-    View } from "./app";
+    View
+} from "./app";
+
+
+import { loadStyles } from "./app/utils/load-css";
 
 const template = require("./vf.html");
+
+
+loadStyles(require("./vf.scss"));
 
 class VF extends HTMLElement {
     constructor() {
@@ -17,6 +26,7 @@ class VF extends HTMLElement {
     }
 
 }
+
 customElements.define("vf-app", VF);
 
 customElements.define("ce-home-page", HomePageComponent);
