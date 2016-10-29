@@ -27,13 +27,22 @@ export class VFComponent extends HTMLElement {
 
     connectedCallback() {
         this._root  = (this as any).attachShadow({mode: 'open'});
-        this._root.innerHTML = ["<style>", styles, "</style>", template].join(" ");
-        var el = document.createElement("div");
-        el.innerHTML = this._root.innerHTML;        
-        var router = new RouterComponent(el,[{ "path":"/","component":HomePageComponent }]);        
-        el.querySelector("ce-router").appendChild(router.connectedCallback().firstChild as HTMLElement);
-        this._root.innerHTML = el.innerHTML;
+        this._root.innerHTML = ["<style>", styles, "</style>", template].join(" ");    
+        new RouterComponent(this._root,[
+            { "path":"/","component":"<ce-home-page></ce-home-page>" },
+            { "path": "/about", "component":"<ce-about-page></ce-about-page>"}
+        ]);            
+
+        setTimeout(() => {
+            var navigate = function (path) {
+                var current = window.location.href;
+                window.location.href = current.replace(/(.*)$/, '') + path;
+            }
+
+            //navigate("about");
+        }, 1000);
     }
+
 
     disconnectedCallback() {
 

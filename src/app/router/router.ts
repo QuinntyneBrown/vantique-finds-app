@@ -5,34 +5,29 @@ const prefix: string = "ce";
 const selector: string = "router";
 
 export class RouterComponent {
-    constructor(element:HTMLElement, private _routes:Array<{ path:string, component:any }>) {
-
-        this._element = element;
-
-
-    }
-
-    private _element:HTMLElement;
-
-    public connectedCallback() {
+    constructor(private _root:any, private _routes:Array<{ path:string, component:any }>) {        
         window.addEventListener('popstate', this._onChanged);
-        //this._clearRoutes();
-        //this._addRoutes();
-        this._onChanged();
-        return this._element;
-    }
 
+        this._onChanged();
+    }
+    
     private _onChanged() {
-        const path = window.location.pathname;        
-        for(var i =0; i < this._routes.length; i++) {
-            if(this._routes[i].path == "/") {
-                var divEl = document.createElement("div");
-                divEl.innerHTML = "<ce-home-page></ce-home-page>";                  
-                this._element.appendChild(divEl);
+        const path = window.location.pathname;              
+        for (var i = 0; i < this._routes.length; i++) {
+            if(path === this._routes[i].path) {
+                this._setRouterElement(this._routes[i].component);    
             }
         }
     }
-    
-	private _root;
+
+    private _setRouterElement(html:string) {
+        this._rootAsHTML = document.createElement("div");
+        this._rootAsHTML.innerHTML = this._root.innerHTML;        
+        (this._rootAsHTML.querySelector("ce-router") as HTMLElement).innerHTML = html;
+        this._root.innerHTML = this._rootAsHTML.innerHTML;
+    }    
+
+
+    private _rootAsHTML;
 }
 

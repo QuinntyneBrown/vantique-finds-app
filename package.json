@@ -4,7 +4,8 @@
   "description": "Vantique Finds App",
   "main": "index.html",
   "scripts": {
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "dev": "lite-server"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   "homepage": "https://github.com/QuinntyneBrown/vantique-finds-app#readme",
   "devDependencies": {
     "awesome-typescript-loader": "^2.2.4",
+    "lite-server": "^2.2.2",
     "reflect-metadata": "^0.1.8",
     "ts-loader": "0.8.2",
     "typescript": "2.0.3",
