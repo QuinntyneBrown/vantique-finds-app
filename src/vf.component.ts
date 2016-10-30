@@ -32,15 +32,7 @@ export class VFComponent extends HTMLElement {
             { "path":"/","component":"<ce-home-page></ce-home-page>" },
             { "path": "/about", "component":"<ce-about-page></ce-about-page>"}
         ]);            
-
-        setTimeout(() => {
-            var navigate = function (path) {
-                var current = window.location.href;
-                window.location.href = current.replace(/(.*)$/, '') + path;
-            }
-
-            //navigate("about");
-        }, 1000);
+        
     }
 
 
