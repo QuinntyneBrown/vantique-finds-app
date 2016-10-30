@@ -29,8 +29,8 @@ export class VFComponent extends HTMLElement {
         this._root  = (this as any).attachShadow({mode: 'open'});
         this._root.innerHTML = ["<style>", styles, "</style>", template].join(" ");    
         new RouterComponent(this._root,[
-            { "path":"/","component":"<ce-home-page></ce-home-page>" },
-            { "path": "/about", "component":"<ce-about-page></ce-about-page>"}
+            { "path":"/","selector":"ce-home-page" },
+            { "path": "/about", "selector":"ce-about-page"}
         ]);            
         
     }

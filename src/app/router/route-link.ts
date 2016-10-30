@@ -3,7 +3,6 @@ let template = require("./route-link.html");
 
 const prefix: string = "ce";
 const selector: string = "route-link";
-let customInnerHTML = [template].join(" ");
 
 export class RouteLink extends HTMLElement {
     constructor() {
@@ -17,13 +16,10 @@ export class RouteLink extends HTMLElement {
     }
 
     connectedCallback() {
-        var _innerText = this.innerText;
-        this._root = (this as any).attachShadow({ mode: 'open' });
-        var el = document.createElement("div");
-        el.innerHTML = customInnerHTML;
-        el.innerText = _innerText;
-        this._root.innerHTML = el.innerHTML;
-
+        var textContent = this.textContent;
+        this._root = (this as any).attachShadow({ mode: 'open' });        
+        this._root.innerHTML = template;
+        this._root.textContent = textContent;
         this.addEventListener("click", (e) => {
             window.history.pushState({ route:this._href }, null, this._href);
         });
